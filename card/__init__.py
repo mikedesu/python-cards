@@ -2,10 +2,10 @@ from enum import Enum
 
 
 class CardFace(Enum):
-    HEART = 1
-    SPADE = 2
-    CLUB = 3
-    DIAMOND = 4
+    HEART = 0
+    SPADE = 1
+    CLUB = 2
+    DIAMOND = 3
 
 
 class CardValue(Enum):
@@ -17,10 +17,11 @@ class CardValue(Enum):
     SEVEN = 7
     EIGHT = 8
     NINE = 9
-    JACK = 10
-    QUEEN = 11
-    KING = 12
-    ACE = 13
+    TEN = 10
+    JACK = 11
+    QUEEN = 12
+    KING = 13
+    ACE = 14
 
 
 def valid_face(face):
@@ -60,6 +61,8 @@ def value2str(v):
         return "8"
     if v == CardValue.NINE:
         return "9"
+    if v == CardValue.TEN:
+        return "10"
     if v == CardValue.JACK:
         return "J"
     if v == CardValue.QUEEN:
@@ -79,6 +82,17 @@ class Card:
             raise ValueError("Value is not valid")
         self.face = face
         self.value = value
+
+    def point_value(self):
+        if (
+            self.value == CardValue.JACK
+            or self.value == CardValue.QUEEN
+            or self.value == CardValue.KING
+        ):
+            return 10
+        elif self.value == CardValue.ACE:
+            return 11
+        return self.value.value
 
     def __str__(self):
         return value2str(self.value) + " " + face2str(self.face)
